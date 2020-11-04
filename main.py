@@ -25,6 +25,8 @@ class MainWindow(Gtk.Window):
         x = evaluate(input)
         if (x is not None):
             self.result.set_text(str(x))
+        elif(input == ""):
+            self.result.set_text("")
         else:
             self.result.set_text("syntax error")
 
