@@ -1,3 +1,6 @@
+#This file is part of lCalc which is released under the MIT License.
+#See the file LICENSE for full license details.
+
 from eval import evaluate
 import gi
 gi.require_version('Gtk', '3.0')
