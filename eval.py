@@ -20,4 +20,5 @@ def __replace_functions(input):
     input = input.replace("tan", "math.tan")
     input = input.replace("pi", "math.pi")
     input = input.replace("e", "math.e")
+    input = input.replace("\n", "")
     return input

@@ -12,23 +12,30 @@ class MainWindow(Gtk.Window):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         self.add(box)
 
-        self.entry = Gtk.Entry()
-        self.entry.connect("changed", self.entry_changed)
-        box.pack_start(self.entry, True, True, 0)
+        self.entry_buffer = Gtk.TextBuffer()
+        self.entry_buffer.connect("changed", self.entry_changed)
+        self.entry_textview = Gtk.TextView(buffer=self.entry_buffer)
+        self.entry_textview.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        box.pack_start(self.entry_textview, True, True, 0)
 
-        self.result = Gtk.Entry()
-        self.result.set_editable(False)
-        box.pack_start(self.result, True, True, 0)
+        self.result_buffer = Gtk.TextBuffer()
+        self.result_textview = Gtk.TextView(buffer=self.result_buffer)
+        self.result_textview.set_editable(False)
+        self.result_textview.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        box.pack_start(self.result_textview, True, True, 0)
 
     def entry_changed(self, widget):
-        input = self.entry.get_text()
+        start_iter = self.entry_buffer.get_start_iter()
+        end_iter = self.entry_buffer.get_end_iter()
+        input = self.entry_buffer.get_text(start_iter, end_iter, True)
+
         x = evaluate(input)
         if (x is not None):
-            self.result.set_text(str(x))
+            self.result_buffer.set_text(str(x))
         elif(input == ""):
-            self.result.set_text("")
+            self.result_buffer.set_text("")
         else:
-            self.result.set_text("syntax error")
+            self.result_buffer.set_text("syntax error")
 
 
 window = MainWindow()
