@@ -1,5 +1,5 @@
 #This file is part of lCalc which is released under the MIT License.
-#See the file LICENSE for full license details.
+#See the file 'LICENSE' for full license details.
 
 from eval import evaluate
 import gi
@@ -17,6 +17,8 @@ class MainWindow(Gtk.Window):
 
         self.entry_buffer = Gtk.TextBuffer()
         self.entry_buffer.connect("changed", self.entry_changed)
+        self.tag = self.entry_buffer.create_tag("red_foreground", foreground="red")
+        self.tag_set = False
         self.entry_textview = Gtk.TextView(buffer=self.entry_buffer)
         self.entry_textview.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
         box.pack_start(self.entry_textview, True, True, 0)
@@ -34,11 +36,19 @@ class MainWindow(Gtk.Window):
 
         x = evaluate(input)
         if (x is not None):
+            if (self.tag_set):
+                self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
+                self.tag_set = False
             self.result_buffer.set_text(str(x))
         elif(input == ""):
+            if (self.tag_set):
+                self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
+                self.tag_set = False
             self.result_buffer.set_text("")
         else:
-            self.result_buffer.set_text("syntax error")
+            self.entry_buffer.apply_tag(self.tag, start_iter, end_iter)
+            self.tag_set = True
+            self.result_buffer.set_text("")
 
 
 window = MainWindow()

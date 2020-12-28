@@ -1,5 +1,5 @@
 #This file is part of lCalc which is released under the MIT License.
-#See the file LICENSE for full license details.
+#See the file 'LICENSE' for full license details.
 
 import math
 
