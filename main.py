@@ -42,7 +42,7 @@ class MainWindow(Gtk.Window):
         result_string = ""
         if (result is not None):
             result_string = str(result)
-        elif(input != ""):
+        else:
             self.entry_buffer.apply_tag(self.tag, start_iter, end_iter)
             self.tag_set = True
             self.result_buffer.set_text("")
