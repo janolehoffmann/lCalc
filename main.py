@@ -38,16 +38,16 @@ class MainWindow(Gtk.Window):
             self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
             self.tag_set = False
 
-        x = evaluate(input)
-        if (x is not None):
-            self.result_buffer.set_text(str(x))
-        elif(input == ""):
-            self.result_buffer.set_text("")
-        else:
+        result = evaluate(input)
+        result_string = ""
+        if (result is not None):
+            result_string = str(result)
+        elif(input != ""):
             self.entry_buffer.apply_tag(self.tag, start_iter, end_iter)
             self.tag_set = True
             self.result_buffer.set_text("")
-
+        
+        self.result_buffer.set_text(result_string)
 
 window = MainWindow()
 window.connect("delete-event", Gtk.main_quit)
