@@ -45,7 +45,6 @@ class MainWindow(Gtk.Window):
         else:
             self.entry_buffer.apply_tag(self.tag, start_iter, end_iter)
             self.tag_set = True
-            self.result_buffer.set_text("")
         
         self.result_buffer.set_text(result_string)
 
