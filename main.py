@@ -34,16 +34,14 @@ class MainWindow(Gtk.Window):
         end_iter = self.entry_buffer.get_end_iter()
         input = self.entry_buffer.get_text(start_iter, end_iter, True)
 
+        if (self.tag_set):
+            self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
+            self.tag_set = False
+
         x = evaluate(input)
         if (x is not None):
-            if (self.tag_set):
-                self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
-                self.tag_set = False
             self.result_buffer.set_text(str(x))
         elif(input == ""):
-            if (self.tag_set):
-                self.entry_buffer.remove_tag(self.tag, start_iter, end_iter)
-                self.tag_set = False
             self.result_buffer.set_text("")
         else:
             self.entry_buffer.apply_tag(self.tag, start_iter, end_iter)
